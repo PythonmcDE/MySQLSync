@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SimpleCloud-Permission">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../API/SimpleCloud-Permission.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
