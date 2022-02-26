@@ -16,6 +16,11 @@ public class DropItem implements Listener {
 	
 	@EventHandler
 	public void onItemDrop(final PlayerDropItemEvent event) {
+		if(PlayerJoin.invsync != null){
+			if(PlayerJoin.invsync.contains(event.getPlayer())){
+				event.setCancelled(true);
+			}
+		}
 		if (pd.getInventoryDataHandler().isSyncComplete(event.getPlayer()) == false) {
 			event.setCancelled(true);
 		}

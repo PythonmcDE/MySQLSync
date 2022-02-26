@@ -13,6 +13,8 @@ import net.craftersland.bridge.inventory.objects.DatabaseInventoryData;
 import net.craftersland.bridge.inventory.objects.InventorySyncData;
 import net.craftersland.bridge.inventory.objects.InventorySyncTask;
 
+import static net.craftersland.bridge.inventory.events.PlayerJoin.setArmorNull;
+
 public class InventoryDataHandler {
 	
 	private Inv pd;
@@ -124,17 +126,14 @@ public class InventoryDataHandler {
 					backupAndReset(p, syncData);
 					DatabaseInventoryData data = pd.getInvMysqlInterface().getData(p);
 					if (data.getSyncStatus().matches("true")) {
+						setPlayerData(p, data, syncData, false);
+						pd.getSoundHandler().sendLevelUpSound(p);
+						TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*5);
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
 								PlayerJoin.invsync.remove(p);
 							}
-							if (pd.getConfigHandler().getString("ChatMessages.syncComplete").matches("") == false) {
-								p.sendMessage(pd.getConfigHandler().getStringWithColor("ChatMessages.syncComplete"));
-								TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*3);
-							}
-							pd.getSoundHandler().sendLevelUpSound(p);
 						}
-						setPlayerData(p, data, syncData, false);
 					} else {
 						new InventorySyncTask(pd, System.currentTimeMillis(), p, syncData).runTaskTimerAsynchronously(pd, 10L, 10L);
 					}

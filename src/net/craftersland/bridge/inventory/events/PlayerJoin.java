@@ -46,10 +46,8 @@ public class PlayerJoin implements Listener {
 	@EventHandler
 	public void onLogin(final PlayerJoinEvent event) {
 		final Player p = event.getPlayer();
-		p.getInventory().clear();
-        setArmorNull(p);
 		invsync.add(p);
-		TTA_Methods.sendActionBar(p, "§8» §7warte auf §6Inventar Sync§7...");
+		TTA_Methods.sendActionBar(p, "§8» §7warte auf §6Inventar Sync§7...", 10);
 		if (Inv.isDisabling == false) {
 			Bukkit.getScheduler().runTaskLaterAsynchronously(inv, new Runnable() {
 
@@ -59,7 +57,6 @@ public class PlayerJoin implements Listener {
 						if (p.isOnline() == true) {
 							inv.getInventoryDataHandler().onJoinFunction(p);
 							new SyncCompleteTask(inv, System.currentTimeMillis(), p).runTaskTimerAsynchronously(inv, 5L, 20L);
-							TTA_Methods.sendActionBar(p, "§8» §6Inventar Sync§a abgeschlossen§7...");
 							for(int i = 0; i<= 35; i++){
 								if(event.getPlayer().getInventory().getItem(i) != null){
 									if(event.getPlayer().getInventory().getItem(i).getItemMeta() != null){
@@ -86,6 +83,7 @@ public class PlayerJoin implements Listener {
 						if(p.getLocation().getX() != new LocationManager("Spawn").getLocation().getX()) {
 							if(p.getLocation().getZ() != new LocationManager("Spawn").getLocation().getZ()) {
 								p.teleport(new LocationManager("Spawn").getLocation());
+								TTA_Methods.sendActionBar(p, "§8» §7warte auf §6Inventar Sync§7...", 1);
 							}
 						}
 					}else {
@@ -93,7 +91,7 @@ public class PlayerJoin implements Listener {
 					}
 				}
 			}
-		}.runTaskTimer(Inv.getInstance(), 10, 10);
+		}.runTaskTimer(Inv.getInstance(), 1, 1);
 	}
 
 }

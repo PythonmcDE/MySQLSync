@@ -32,7 +32,7 @@ public class InventorySyncTask extends BukkitRunnable {
 					inProgress = true;
 					DatabaseInventoryData data = pd.getInvMysqlInterface().getData(p);
 					if (data.getSyncStatus().matches("true")) {
-						pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
+						//pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
 						inProgress = false;
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
@@ -46,7 +46,7 @@ public class InventorySyncTask extends BukkitRunnable {
 						}
 						this.cancel();
 					} else if (System.currentTimeMillis() - Long.parseLong(data.getLastSeen()) >= 600 * 1000) {
-						pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
+						//pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
 						inProgress = false;
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
@@ -60,7 +60,7 @@ public class InventorySyncTask extends BukkitRunnable {
 						}
 						this.cancel();
 					} else if (System.currentTimeMillis() - startTime >= 22 * 1000) {
-						pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
+						//pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
 						inProgress = false;
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
