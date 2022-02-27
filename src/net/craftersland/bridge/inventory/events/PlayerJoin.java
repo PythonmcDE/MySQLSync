@@ -2,6 +2,8 @@ package net.craftersland.bridge.inventory.events;
 
 import de.Herbystar.TTA.TTA_Methods;
 import net.craftersland.bridge.inventory.Inv;
+import net.craftersland.bridge.inventory.InventoryDataHandler;
+import net.craftersland.bridge.inventory.objects.InventorySyncData;
 import net.craftersland.bridge.inventory.objects.LocationManager;
 import net.craftersland.bridge.inventory.objects.SyncCompleteTask;
 
@@ -48,6 +50,8 @@ public class PlayerJoin implements Listener {
 		final Player p = event.getPlayer();
 		invsync.add(p);
 		TTA_Methods.sendActionBar(p, "§8» §7warte auf §6Inventar Sync§7...", 10);
+		final InventorySyncData syncData = new InventorySyncData();
+		InventoryDataHandler.backupAndReset(p, syncData);
 		if (Inv.isDisabling == false) {
 			Bukkit.getScheduler().runTaskLaterAsynchronously(inv, new Runnable() {
 

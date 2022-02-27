@@ -17,7 +17,7 @@ import static net.craftersland.bridge.inventory.events.PlayerJoin.setArmorNull;
 
 public class InventoryDataHandler {
 	
-	private Inv pd;
+	public static Inv pd;
 	private static Set<Player> playersInSync = new HashSet<Player>();
 	private Set<Player> playersDisconnectSave = new HashSet<Player>();
 	
@@ -123,7 +123,7 @@ public class InventoryDataHandler {
 			if (playersInSync.contains(p) == false) {
 				if (pd.getInvMysqlInterface().hasAccount(p) == true) {
 					final InventorySyncData syncData = new InventorySyncData();
-					backupAndReset(p, syncData);
+					//backupAndReset(p, syncData);
 					DatabaseInventoryData data = pd.getInvMysqlInterface().getData(p);
 					if (data.getSyncStatus().matches("true")) {
 						setPlayerData(p, data, syncData, false);
@@ -139,13 +139,14 @@ public class InventoryDataHandler {
 					}
 				} else {
 					playersInSync.add(p);
+					PlayerJoin.invsync.add(p);
 					onDataSaveFunction(p, false, "false", null, null);
 				}
 			}
 		}
 	}
 	
-	private void backupAndReset(Player p, InventorySyncData syncData) {
+	public static void backupAndReset(Player p, InventorySyncData syncData) {
 		syncData.setBackupInventory(p.getInventory().getContents());
 		syncData.setBackupArmor(p.getInventory().getArmorContents());
 		p.setItemOnCursor(null);

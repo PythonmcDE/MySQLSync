@@ -32,55 +32,46 @@ public class InventorySyncTask extends BukkitRunnable {
 					inProgress = true;
 					DatabaseInventoryData data = pd.getInvMysqlInterface().getData(p);
 					if (data.getSyncStatus().matches("true")) {
-						//pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
+						pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
 						inProgress = false;
+						pd.getSoundHandler().sendLevelUpSound(p);
+						TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*5);
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
 								PlayerJoin.invsync.remove(p);
 							}
-							if (pd.getConfigHandler().getString("ChatMessages.syncComplete").matches("") == false) {
-								p.sendMessage(pd.getConfigHandler().getStringWithColor("ChatMessages.syncComplete"));
-								TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*3);
-							}
-							pd.getSoundHandler().sendLevelUpSound(p);
 						}
 						this.cancel();
 					} else if (System.currentTimeMillis() - Long.parseLong(data.getLastSeen()) >= 600 * 1000) {
-						//pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
+						pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
 						inProgress = false;
+						pd.getSoundHandler().sendLevelUpSound(p);
+						TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*5);
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
 								PlayerJoin.invsync.remove(p);
 							}
-							if (pd.getConfigHandler().getString("ChatMessages.syncComplete").matches("") == false) {
-								p.sendMessage(pd.getConfigHandler().getStringWithColor("ChatMessages.syncComplete"));
-								TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*3);
-							}
-							pd.getSoundHandler().sendLevelUpSound(p);
 						}
 						this.cancel();
 					} else if (System.currentTimeMillis() - startTime >= 22 * 1000) {
-						//pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
+						pd.getInventoryDataHandler().setPlayerData(p, data, syncD, true);
 						inProgress = false;
+						pd.getSoundHandler().sendLevelUpSound(p);
+						TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*5);
 						if(PlayerJoin.invsync != null){
 							if(PlayerJoin.invsync.contains(p)){
 								PlayerJoin.invsync.remove(p);
 							}
-							if (pd.getConfigHandler().getString("ChatMessages.syncComplete").matches("") == false) {
-								p.sendMessage(pd.getConfigHandler().getStringWithColor("ChatMessages.syncComplete"));
-								TTA_Methods.sendActionBar(p, "§8» §7Inventar Sync §aabgeschlossen§7!", 20*3);
-							}
-							pd.getSoundHandler().sendLevelUpSound(p);
 						}
 						this.cancel();
 					}
 					inProgress = false;
 				} else {
-					//inProgress = false;
+					inProgress = false;
 					this.cancel();
 				}
 			} else {
-				//inProgress = false;
+				inProgress = false;
 				this.cancel();
 			}
 		}
